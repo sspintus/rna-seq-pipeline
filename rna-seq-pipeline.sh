@@ -1,46 +1,18 @@
-fastq_dir=$1
-tools_dir=$2
-fastqc=$tools_dir'/FastQC/fastqc'
-trimmomatic='java - jar '$tools_dir'/Trimmomatic-0.36/trimmomatic-0.36.jar'
-hisat=$tools_dir'/hisat2-2.1.0/hisat2-align'
-htseq=$tools_dir'/HTSeq/htseq-count'
-edger='Rscript '$tools_dir'/edgeR/edgeR.R'
+#[ $3=="" ] && echo "Usage: rna-seq-pipeline.sh project fastq tools"
+#exit
 
-qc_raw(){
-  echo "QC on raw data..."
-}
+set -e
 
-trim_clip(){
-  echo "Trimming & clipping..."
-}
+source init_tools.sh
+source init_project.sh
+source steps.sh
 
-qc_trim(){
-  echo "QC on trimmed & clpped data"
-}
+project_dir=$1
+fastq_dir=$2
+tools_dir=$3
 
-align(){
-  echo "Aligning..."
-}
-
-count(){
-  echo "Counting..."
-}
-
-deg(){
-  echo "Differential Expression..."
-}
-
-go(){
-  echo "GO Enrichment..."
-}
-
-tf(){
-  echo "TF Enrichment..."
-}
-
-path(){
-  echo "Pathway Enrichment..."
-}
+init_tools $tools_dir
+init_project $project_dir
 
 qc_raw
 trim_clip
